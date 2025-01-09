@@ -163,3 +163,18 @@ class Feedbacks(models.Model):
 
     def __str__(self):
         return f'{self.doctor_id}, {self.patient_id}'
+
+
+class Chat(models.Model):
+    person = models.ManyToManyField(Profile)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+
+class Message(models.Model):
+    chat = models.ForeignKey(Chat, on_delete=models.CASCADE)
+    author = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    text = models.TextField(null=True, blank=True)
+    image = models.ImageField(upload_to='images', null=True, blank=True)
+    video = models.FileField(upload_to='videos', null=True, blank=True)
+    create_at = models.DateTimeField(auto_now_add=True)
+
